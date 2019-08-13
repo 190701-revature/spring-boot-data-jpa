@@ -7,7 +7,7 @@ spring:
     name: my-app
   datasource:    username: ${DB_USER}
     password: ${DB_PASSWORD}
-    url: ${DB_URL}    
+    url: ${DB_URL}
   jpa:
     hibernate:
       ddl-auto: update

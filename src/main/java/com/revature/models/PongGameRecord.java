@@ -1,6 +1,7 @@
 package com.revature.models;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +9,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
+import org.springframework.validation.annotation.Validated;
+
+
+/**
+ * Bean Validation is a Java standard for how to implement the validation of
+ * model data or other beans using the standards defined in JSR-303 and which
+ * are extended to Bean Validation in JSR-380.  Hibernate Validator is an 
+ * approved implementor of JSR-380.
+ * 
+ * We can validate beans by providing validator rules via annotations on the
+ * Model class. And then validate them at various places in our application,
+ * either by declaring that the bean should be validated using the @Validated
+ * annotation or declaring points to validate it in execution using the @Valid
+ * annotation - most commonly at the controller level.
+ *
+ */
 @Entity
 @Table(name="PONG_GAME_RECORDS")
 public class PongGameRecord {
@@ -19,13 +40,22 @@ public class PongGameRecord {
 	
 	// ??? 
 	private Duration duration;
+	
+	@NotNull(message="Winner cannot be null!")
 	private String winner;
 	
+	@NotNull
+	@Positive
 	@Column(name="SCORE_WINNER")
 	private int scoreWinner;
 	
+	@NotNull
+	@PositiveOrZero
 	@Column(name="SCORE_LOSER")
 	private int scoreLoser;
+	
+	@Past
+	LocalDateTime completionTimestamp;
 
 	public int getId() {
 		return id;
